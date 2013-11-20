@@ -1,6 +1,6 @@
 package abstractfactory.tablefactory;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
+import java.util.Iterator;
 
 import abstractfactory.factory.Item;
 import abstractfactory.factory.Tray;
@@ -19,10 +19,14 @@ public class TableTray extends Tray {
 		sb.append("<td bgcolor=\"#cccccc\" align=\"center\" colspan=\"" + tray.size() + "\"><b>" + caption + "</b></td>");
 		sb.append("</tr>\n");
 		sb.append("<tr>\n");
-		Iterator iterator = tray.iterator();
+		Iterator<Item> iterator = tray.iterator();
 		while(iterator.hasNext()) {
 			Item item = iterator.next();
+			sb.append(item.makeHTML());
 		}
+		sb.append("</tr></table>");
+		sb.append("</td>");
+		return sb.toString();
 	}
 
 }
