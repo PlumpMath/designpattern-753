@@ -1,27 +1,28 @@
 package factory.method.idcard;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import factory.method.framwork.Factory;
 import factory.method.framwork.Product;
 
 public class IDCardFactory extends Factory {
 	
-	private List owners = new ArrayList();
-
-	public List getOwners() {
-		return owners;
-	}
+	private HashMap<String, Integer> database = new HashMap<String, Integer>();
+	private int serial = 100;
 
 	@Override
-	protected Product createProduct(String owner) {
-		return new IDCard(owner);
+	protected synchronized Product createProduct(String owner) {
+		return new IDCard(owner, serial++);
 	}
 
 	@Override
 	protected void registerProduct(Product product) {
-		owners.add(((IDCard)product).getOwner());
+		IDCard card = (IDCard) product;
+		database.put(card.getOwner(), new Integer(card.getSerial()));
+	}
+	
+	public HashMap<String, Integer> getDatabase() {
+		return database;
 	}
 }
