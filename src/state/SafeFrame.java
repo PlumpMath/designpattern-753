@@ -44,39 +44,55 @@ public class SafeFrame extends Frame implements Context , ActionListener{
 		panel.add(buttonExit);
 		// そのパネルを配置
 		add(panel, BorderLayout.SOUTH);
+        // 表示
 		pack();
-		show();
-		buttonUse.addActionListener(this);
+		setVisible(true);
+        // リスナーの設定
+        buttonUse.addActionListener(this);
+        buttonAlarm.addActionListener(this);
+        buttonPhone.addActionListener(this);
+        buttonExit.addActionListener(this);
 	}
 	
-	@Override
-	public void setClock(int hour) {
-
-	}
-
-	@Override
-	public void changeState(State state) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void callSecurityCenter(String msg) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void recordLog(String msg) {
-		// TODO Auto-generated method stub
-
-	}
-
-	// ボタンが押されたらここに来る
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
+    // ボタンが押されたらここに来る
+    public void actionPerformed(ActionEvent e) {
+        System.out.println(e.toString());
+        if (e.getSource() == buttonUse) {           // 金庫使用ボタン
+            state.doUse(this);
+        } else if (e.getSource() == buttonAlarm) {  // 非常ベルボタン
+            state.doAlarm(this);
+        } else if (e.getSource() == buttonPhone) {  // 通常通話ボタン
+            state.doPhone(this);
+        } else if (e.getSource() == buttonExit) {   // 終了ボタン
+            System.exit(0);
+        } else {
+            System.out.println("?");
+        }
+    }
+    // 時刻の設定
+    public void setClock(int hour) {
+        String clockstring = "現在時刻は";
+        if (hour < 10) {
+            clockstring += "0" + hour + ":00";
+        } else {
+            clockstring += hour + ":00";
+        }
+        System.out.println(clockstring);
+        textClock.setText(clockstring);
+        state.doClock(this, hour);
+    }
+    // 状態変化
+    public void changeState(State state) {
+        System.out.println(this.state + "から" + state + "へ状態が変化しました。");
+        this.state = state;
+    }
+    // 警備センター警備員呼び出し
+    public void callSecurityCenter(String msg) {
+        textScreen.append("call! " + msg + "\n");
+    }
+    // 警備センター記録
+    public void recordLog(String msg) {
+        textScreen.append("record ... " + msg + "\n");
+    }
 }
+
