@@ -1,0 +1,4 @@
+ykato@ykato.com=Yukiko Kato
+hanako@ykato.com=Hanako Sato
+tomura@ykato.com=Tomura
+mamoru@ykato.com=Mamoru Takahashi
