@@ -1,4 +1,6 @@
-package facade.pagemaker;
+package facade;
+
+import facade.pagemaker.PageMaker;
 
 public class Main {
 
